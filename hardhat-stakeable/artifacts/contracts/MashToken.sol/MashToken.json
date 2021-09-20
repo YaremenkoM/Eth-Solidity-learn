@@ -1,0 +1,16 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "MashToken",
+  "sourceName": "contracts/MashToken.sol",
+  "abi": [
+    {
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    }
+  ],
+  "bytecode": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea26469706673582212200c5b09833e1f9a76ba8d74c0239d0a1776b2dadc38a0f3c9f9f57f0d119e75a964736f6c63430008040033",
+  "deployedBytecode": "0x6080604052600080fdfea26469706673582212200c5b09833e1f9a76ba8d74c0239d0a1776b2dadc38a0f3c9f9f57f0d119e75a964736f6c63430008040033",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}
