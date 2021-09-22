@@ -115,6 +115,10 @@ contract Stakeable{
         return toWithdraw;
     }
 
+    //Claim across all the stakes.
+    //Take (just to put in "to withdraw" field) amount to withdraw from the earned reward,
+    //and and if the amount to withdraw less than earned reward, put the rest to stake.
+    //If the amount to withdraw is bigger than earned reward - take rest of needed amount from staking.
     function _claimAndWithdraw(uint amount) internal {
         _claim();
         require(amount > 0, "Can't withdraw nothing");
@@ -126,8 +130,6 @@ contract Stakeable{
         require((stakeholders[user_index].toWithdraw + stakingSum.total_amount) <= amount, "Can't withdraw more that you own");
 
 
-        //Badly expensive. Maybe could be done in more efficient way
-
         if(amount < stakeholders[user_index].toWithdraw) {
             uint256 diffToStake = stakeholders[user_index].toWithdraw - amount;
             _stake(diffToStake);
@@ -136,27 +138,29 @@ contract Stakeable{
 
             uint diffToWithdraw = amount - stakeholders[user_index].toWithdraw;
 
-            for (uint256 s = stakeholders[user_index].address_stakes.length-1; s >= stakeholders[user_index].address_stakes.length; s--){
-                uint256 stakeAmount = stakeholders[user_index].address_stakes[s].amount;
+            stakeholders[user_index].address_stakes[0].amount = stakeholders[user_index].address_stakes[0].amount - diffToWithdraw;
 
-                if (diffToWithdraw <= stakeAmount) {
-                    if (stakeAmount - diffToWithdraw == 0) {
-//                        stakeholders[user_index].address_stakes = stakeholders[user_index].address_stakes[:s];
-                        stakeholders[user_index].address_stakes.pop();
-                        return;
-                    } else {
-                        stakeholders[user_index].address_stakes[s].amount = stakeAmount - diffToWithdraw;
-                        return;
-                    }
-                } else {
-                    diffToWithdraw = diffToWithdraw - stakeAmount;
-                    stakeholders[user_index].address_stakes.pop();
-                }
-
-            }
-
-            stakeholders[user_index].toWithdraw = amount;
+//             Badly expensive. Maybe could be done in more efficient way
+//            for (uint256 s = stakeholders[user_index].address_stakes.length-1; s >= stakeholders[user_index].address_stakes.length; s--){
+//                uint256 stakeAmount = stakeholders[user_index].address_stakes[s].amount;
+//
+//                if (diffToWithdraw <= stakeAmount) {
+//                    if (stakeAmount - diffToWithdraw == 0) {
+////                       [/ stakeholders[user_index].address_stakes = stakeholders[user_index].address_stakes[:s]; /]
+//                        stakeholders[user_index].address_stakes.pop();
+//                        return;
+//                    } else {
+//                        stakeholders[user_index].address_stakes[s].amount = stakeAmount - diffToWithdraw;
+//                        return;
+//                    }
+//                } else {
+//                    diffToWithdraw = diffToWithdraw - stakeAmount;
+//                    stakeholders[user_index].address_stakes.pop();
+//                }
+//
+//            }
         }
+        stakeholders[user_index].toWithdraw = amount;
     }
 
 
