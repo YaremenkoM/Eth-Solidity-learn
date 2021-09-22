@@ -11,25 +11,33 @@ contract MashToken is ERC20, Ownable, Stakeable {
     }
 
 
-    function stake(uint256 _amount) external{
-      require(_amount < balanceOf(msg.sender), "Cannot stake more than you own");
-      require(_amount > 0, "Need to stake smth, cant stake nothing"); //this require was in stakeable contract (is it ok to put it here?)
+    function stake(uint256 _amount) public{
+      require(_amount <= balanceOf(msg.sender), "Cannot stake more than you owns");
+      require(_amount > 0, "Need to stake smth, cant stake nothing");
 
       _stake(_amount);
       _burn(msg.sender, _amount);
     }
 
-    function withdrawStake(uint256 amount, uint256 stake_index) external {
-      uint256 amount_to_mint = _withdrawStake(amount, stake_index);
-      _mint(msg.sender, amount_to_mint);
+//    function withdrawStake(uint256 amount, uint256 stake_index) external {
+//      uint256 amount_to_mint = _withdrawStake(amount, stake_index);
+//      _mint(msg.sender, amount_to_mint);
+//    }
+
+    function claim() external {
+      _claim();
     }
 
-    function claim(uint256 index) external {
-      _claim(index);
+    function withdraw() external{
+      uint256 toWithdraw = _withdraw();
+      _mint(msg.sender, toWithdraw);
     }
 
-    function withdraw(uint amount, uint index) external{
-      uint256 amount_to_mint = _withdraw(amount, index);
-      _mint(msg.sender, amount_to_mint);
+    function claimAndWithdraw(uint256 amount) external{
+        _claimAndWithdraw(amount);
+    }
+
+    function stakingSummary() external view returns(StakingSummary memory){
+        return _stakingSummary();
     }
 }
