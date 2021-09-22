@@ -124,7 +124,6 @@ contract Stakeable{
         require(amount > 0, "Can't withdraw nothing");
 
         uint256 user_index = stakes[msg.sender];
-        require(user_index != 0, "The user is not a stakeholder yet");
 
         StakingSummary memory stakingSum = _stakingSummary();
         require((stakeholders[user_index].toWithdraw + stakingSum.total_amount) <= amount, "Can't withdraw more that you own");

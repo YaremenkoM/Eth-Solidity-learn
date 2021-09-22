@@ -114,8 +114,8 @@
       ]
     },
     "/Users/mariayaremenko/projects/Eth-Solidity-learn/hardhat-stakeable/contracts/Stakeable.sol": {
-      "lastModificationDate": 1632256778870,
-      "contentHash": "2873a258b2358dcc021903b2a2f77be7",
+      "lastModificationDate": 1632298605611,
+      "contentHash": "da675880f246367fab732c52042a3693",
       "sourceName": "contracts/Stakeable.sol",
       "solcConfig": {
         "version": "0.8.4",
