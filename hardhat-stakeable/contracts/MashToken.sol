@@ -5,6 +5,7 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./Stakeable.sol";
 
+
 contract MashToken is ERC20, Ownable, Stakeable {
     constructor(uint256 initialSupply) ERC20("MashToken", "MASH") {
         _mint(msg.sender, initialSupply);

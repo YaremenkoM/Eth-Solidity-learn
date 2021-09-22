@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/Users/mariayaremenko/projects/Eth-Solidity-learn/hardhat-stakeable/contracts/MashToken.sol": {
-      "lastModificationDate": 1632257404025,
-      "contentHash": "c95260265dc32f5933f2273b16b004f3",
+      "lastModificationDate": 1632306944413,
+      "contentHash": "e16e3dbdbcc5fa27bb09ce1e67a4e08a",
       "sourceName": "contracts/MashToken.sol",
       "solcConfig": {
         "version": "0.8.4",

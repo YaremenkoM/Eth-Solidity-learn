@@ -52,4 +52,29 @@ describe("MashToken contract", function () {
         expect(initialBalance - resultBalance).to.equal(tokensToStake);
     });
 
+
+    it("Can stake several times and calculate sum", async function () {
+        await mashToken.stake(100);
+        await mashToken.stake(500);
+        await mashToken.stake(50);
+
+        const summary = await mashToken.stakingSummary();
+
+        expect(summary.total_amount).to.equal(650);
+
+    });
+
+    // it("Can't withdraw if less than 1 day passed", async function () {
+    //     await mashToken.stake(1000);
+    //     //rewinding time
+    //     await mashToken.claim();
+    //
+    //     try {
+    //         await mashToken.withdraw();
+    //         expect(false);
+    //     } catch (err) {
+    //         expect(err.message).to.contains("Can't withdraw if less than 1 day passed after last claim");
+    //     }
+    // });
+
 });
