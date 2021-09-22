@@ -41,14 +41,6 @@ describe("MashToken contract", function () {
         }
     });
 
-    it("Cannot stake from zero address", async function () {
-        try {
-            await mashToken.stake(0);
-            expect(false);
-        } catch(err){
-            expect(err.message).to.contains("Need to stake smth, cant stake nothing");
-        }
-    });
 
     it("Burns amount of staked tokens from sender address", async function () {
         const initialBalance = await mashToken.balanceOf(owner.address);

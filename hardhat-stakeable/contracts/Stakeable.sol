@@ -126,6 +126,7 @@ contract Stakeable{
         require((stakeholders[user_index].toWithdraw + stakingSum.total_amount) <= amount, "Can't withdraw more that you own");
 
 
+        //Badly expensive. Maybe could be done in more efficient way
 
         if(amount < stakeholders[user_index].toWithdraw) {
             uint256 diffToStake = stakeholders[user_index].toWithdraw - amount;
@@ -136,18 +137,19 @@ contract Stakeable{
             uint diffToWithdraw = amount - stakeholders[user_index].toWithdraw;
 
             for (uint256 s = stakeholders[user_index].address_stakes.length-1; s >= stakeholders[user_index].address_stakes.length; s--){
+                uint256 stakeAmount = stakeholders[user_index].address_stakes[s].amount;
 
-                if (diffToWithdraw <= stakeholders[user_index].address_stakes[s].amount) {
-                    if (stakeholders[user_index].address_stakes[s].amount - diffToWithdraw == 0) {
+                if (diffToWithdraw <= stakeAmount) {
+                    if (stakeAmount - diffToWithdraw == 0) {
 //                        stakeholders[user_index].address_stakes = stakeholders[user_index].address_stakes[:s];
                         stakeholders[user_index].address_stakes.pop();
                         return;
                     } else {
-                        stakeholders[user_index].address_stakes[s].amount = stakeholders[user_index].address_stakes[s].amount - diffToWithdraw;
+                        stakeholders[user_index].address_stakes[s].amount = stakeAmount - diffToWithdraw;
                         return;
                     }
                 } else {
-                    diffToWithdraw = diffToWithdraw - stakeholders[user_index].address_stakes[s].amount;
+                    diffToWithdraw = diffToWithdraw - stakeAmount;
                     stakeholders[user_index].address_stakes.pop();
                 }
 
@@ -190,7 +192,7 @@ contract Stakeable{
         return (diff  * amount * APY) / x;
     }
 
-    function _stakingSummary() public view returns(StakingSummary memory){
+    function _stakingSummary() internal view returns(StakingSummary memory){
         uint256 totalStakeAmount;
 
         uint256 user_index = stakes[msg.sender];
